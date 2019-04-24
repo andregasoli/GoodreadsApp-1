@@ -120,7 +120,7 @@ namespace GoodreadsApp.Web.Services.Data
                 return new Author
                 {
                     Name = HttpUtility.HtmlDecode(nameAnchor.SelectSingleNode(XPathConstants.AuthorName).InnerHtml),
-                    Path = nameAnchor.Attributes["href"].Value,
+                    Path = ConvertPath(nameAnchor.Attributes["href"].Value),
                     Role = roleSpan?.InnerHtml.Replace("(", "").Replace(")", "") ?? string.Empty
                 };
             });

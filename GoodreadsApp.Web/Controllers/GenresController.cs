@@ -9,11 +9,11 @@ namespace GoodreadsApp.Web.Controllers
     [ApiController]
     public class GenresController : Controller
     {
-        private readonly IGenreProvider _provider;
+        private readonly IGenreProvider _genreProvider;
 
         public GenresController(IGenreProvider provider)
         {
-            _provider = provider;
+            _genreProvider = provider;
         }
 
         // GET: Genres
@@ -21,7 +21,7 @@ namespace GoodreadsApp.Web.Controllers
         {
             try
             {
-                return Ok(await _provider.GetGenresAsync());
+                return Ok(await _genreProvider.GetGenresAsync());
             }
             catch (Exception e)
             {
