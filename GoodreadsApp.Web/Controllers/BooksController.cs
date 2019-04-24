@@ -20,21 +20,21 @@ namespace GoodreadsApp.Web.Controllers
             _genreProvider = genreProvider;
         }
 
-        // GET: Books/Latest
+        // GET: Books/Latest/{genreName}
         [HttpGet("Latest/{genreName}")]
         public Task<IActionResult> GetLatestBooksByGenreAsync(string genreName)
         {
             return GetBooksByGenreAsync(genreName, _bookProvider.GetLatestBooksByGenreAsync);
         }
 
-        // GET: Books/MostRead
+        // GET: Books/MostRead/{genreName}
         [HttpGet("MostRead/{genreName}")]
         public Task<IActionResult> GetMostReadBooksByGenreThisWeekAsync(string genreName)
         {
             return GetBooksByGenreAsync(genreName, _bookProvider.GetMostReadBooksByGenreThisWeekAsync);
         }
 
-        // GET: Books/Popular
+        // GET: Books/Popular/{genreName}
         [HttpGet("Popular/{genreName}")]
         public Task<IActionResult> GetPopularBooksByGenreAsync(string genreName)
         {
@@ -51,6 +51,42 @@ namespace GoodreadsApp.Web.Controllers
                 }
                 else
                     return NotFound($"Genre \"{genreName}\" not found.");
+            }
+            catch (Exception e)
+            {
+                // TODO: Handle exception
+                return BadRequest(e);
+            }
+        }
+
+        // GET: Books/Search
+        [HttpGet("Search")]
+        public async Task<IActionResult> SearchBooksAsync(string searchTerm, int page = 1)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+                return BadRequest("Search term is empty.");
+
+            try
+            {
+                return Ok(await _bookProvider.SearchBooksAsync(searchTerm, page));
+            }
+            catch (Exception e)
+            {
+                // TODO: Handle exception
+                return BadRequest(e);
+            }
+        }
+
+        // GET: Books/Details/{id}
+        [HttpGet("Details/{path}")]
+        public async Task<IActionResult> GetBookDetailsAsync(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return BadRequest("Path is empty.");
+
+            try
+            {
+                return Ok(await _bookProvider.GetBookDetailsAsync(path));
             }
             catch (Exception e)
             {
