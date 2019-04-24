@@ -17,7 +17,7 @@ namespace GoodreadsApp.Web.Controllers
         }
 
         // GET: Genres
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetGenresAsync()
         {
             try
             {
@@ -25,6 +25,7 @@ namespace GoodreadsApp.Web.Controllers
             }
             catch (Exception e)
             {
+                // TODO: Handle exception
                 return BadRequest(e);
             }
         }
